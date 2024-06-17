@@ -2,9 +2,10 @@ import os
 import pandas as pd
 
 def get_subdirectories(directory):
+    # директории, поддиректории, файлы
     directory_all = list(os.walk(directory))
     for item in directory_all:
-        _, _,file_names = item
+        _, _,file_names = item # название файлов
     list_path = []
     for file_name in file_names:
         list_path.append(os.path.join(directory,file_name))
