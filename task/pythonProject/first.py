@@ -12,14 +12,13 @@ def cal_hash(path_file):
 
 # получение списка всех изображений в папке
 def get_list_image(directory):
+    list_path = []
     directory_list = list(os.walk(directory))
     for item in directory_list:
         dir_path, _, file_names = item
-    list_path = []
-    for file_name in file_names:
-        if file_name.endswith('.jpg'):
-            list_path.append(os.path.join(dir_path, file_name))
-    print('len list_image', len(list_path))
+        for file_name in file_names:
+            if file_name.endswith('.jpg'):
+                list_path.append(os.path.join(dir_path, file_name))
     result = pd.DataFrame(list_path, columns=['File Path'])
     return result
 
@@ -45,29 +44,36 @@ def group_hash(table_hashsum):
         return pd.DataFrame()
 
 
-input_directory_path = r"C:\Users\Татьяна\Desktop\modsen\5 Flower Types Classification Dataset-1\5 Flower Types Classification Dataset\tmp"
+input_directory_path = input()
 request_directory = []
-request_directory.append(input_directory_path)
+while 1:
+    if input_directory_path == 'q':
+        break
+    else:
+        request_directory.append(input_directory_path)
+        input_directory_path = input()
+print(request_directory)
 image_list = []
 image_list = pd.concat([get_list_image(directory_path) for directory_path in request_directory], ignore_index=True)
+print(image_list)
 image_hash_list = get_list_hash(image_list)
 group_hash_result = group_hash(image_hash_list)
 fig = plt.figure(figsize=(8, 5))
 
 num_images = len(group_hash_result)
-print(num_images)
 num_cols = min(num_images, 4)
 if num_images > 0:
     num_rows = (num_images + num_cols - 1) // num_cols  # количество строк в сетке
+    for i, (_, item) in enumerate(group_hash_result.iterrows()):
+        file_path = item['File Path']
+        img = Image.open(file_path)
+        ax = fig.add_subplot(num_rows, num_cols, i + 1)
+        ax.imshow(img)
+        plt.gca().set_axis_off()
+        ax.set_title(f'Image {i + 1}')
+    plt.tight_layout()
+    plt.show()
 else:
-    num_rows = 1
+    print("Not found duplicate")
 
-for i, (_, item) in enumerate(group_hash_result.iterrows()):
-    file_path = item['File Path']
-    img = Image.open(file_path)
-    ax = fig.add_subplot(num_rows, num_cols, i + 1)
-    ax.imshow(img)
-    plt.gca().set_axis_off()
-    ax.set_title(f'Image {i + 1}')
-plt.tight_layout()
-plt.show()
+
