@@ -1,13 +1,20 @@
-import hashlib
+import imagehash
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 # подсчет хэш-суммы изображения
 def cal_hash(path_file):
-    return hashlib.md5(open(path_file, 'rb').read()).hexdigest()
+    img = Image.open(path_file)
+    img = ImageOps.autocontrast(img)
+    img = ImageOps.equalize(img)
+    img = img.resize((32, 32))
+    img = img.convert('L')
+    hash_img = str(imagehash.phash(img))
+    img.close()
+    return hash_img
 
 
 # получение списка всех изображений в папке
@@ -52,28 +59,42 @@ while 1:
     else:
         request_directory.append(input_directory_path)
         input_directory_path = input()
-print(request_directory)
-image_list = []
 image_list = pd.concat([get_list_image(directory_path) for directory_path in request_directory], ignore_index=True)
-print(image_list)
 image_hash_list = get_list_hash(image_list)
 group_hash_result = group_hash(image_hash_list)
-fig = plt.figure(figsize=(8, 5))
-
+count_group_list = group_hash_result['Image Hash'].value_counts().tolist()
 num_images = len(group_hash_result)
-num_cols = min(num_images, 4)
 if num_images > 0:
-    num_rows = (num_images + num_cols - 1) // num_cols  # количество строк в сетке
+    current_group = 0
+    count_group = 0
+    num_cols = min(count_group_list[current_group], 2)
+    num_rows = (count_group_list[current_group] + num_cols - 1) // num_cols
+    num_subplots = num_rows * num_cols
+    fig = plt.figure(figsize=(8, 5))
+    axes = []
     for i, (_, item) in enumerate(group_hash_result.iterrows()):
         file_path = item['File Path']
+        file_hash = item['Image Hash']
+        if i == 0:
+            count_group += 1
+        if count_group_list[current_group] == count_group:
+            current_group += 1
+            count_group = 0
+            num_cols = min(count_group_list[current_group], 2)
+            num_rows = (count_group_list[current_group] + num_cols - 1) // num_cols
+            num_subplots = num_rows * num_cols
+
         img = Image.open(file_path)
-        ax = fig.add_subplot(num_rows, num_cols, i + 1)
+        ax = fig.add_subplot(num_rows, num_cols, i % num_subplots + 1)
         ax.imshow(img)
-        plt.gca().set_axis_off()
         ax.set_title(f'Image {i + 1}')
+        ax.axis('off')
+        axes.append(ax)
+        img.close()
+        if i != 0:
+            count_group += 1
+
     plt.tight_layout()
     plt.show()
 else:
     print("Not found duplicate")
-
-
