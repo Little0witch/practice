@@ -2,8 +2,12 @@
 Результаты выполнения модуля "Основы" представлены на рисунке 1.
 <p align="center">
   <img src="https://github.com/Little0witch/practice/blob/main/course/Git/img1.jpg">
-  <p>
-    Рисунок 1
-  </p>
+  <p align="center"> Рисунок 1 </p>
+</p>
+
+Результаты выполнения модуля "Удаленный репозиторий" представлены на рисунке 2.
+<p align="center">
+  <img src="https://github.com/Little0witch/practice/blob/main/course/Git/img2.jpg">
+  <p align="center"> Рисунок 2 </p>
 </p>
 
