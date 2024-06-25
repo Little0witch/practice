@@ -2,5 +2,8 @@
 Результаты выполнения модуля "Основы" представлены на рисунке 1.
 <p align="center">
   <img src="https://github.com/Little0witch/practice/blob/main/course/Git/img1.jpg">
+  <p>
+    Рисунок 1
+  </p>
 </p>
-Рисунок 1
+
