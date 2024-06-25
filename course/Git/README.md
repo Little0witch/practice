@@ -1,6 +1,6 @@
 Условие задания: После изучения документации данного модуля необходимо выполнить все практические задания из следующего источника: [link](https://learngitbranching.js.org/?locale=ru_RU). Результат выполнения каждого раздела должен быть сохранен в качестве скриншота в вашем репозитории в папке “Git”.
 Результаты выполнения модуля "Основы" представлены на рисунке 1.
 <p align="center">
-  <img src="[https://github.com/blademoon/Markdown/blob/main/Picture/cat.jpg](https://github.com/Little0witch/practice/blob/main/course/Git/img1.jpg)">
+  <img src="https://github.com/blademoon/Markdown/blob/main/Picture/cat.jpg">
 </p>
 Рисунок 1
