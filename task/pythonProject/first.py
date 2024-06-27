@@ -3,11 +3,10 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
-import openpyxl
 
 
 # Подсчет хэш-суммы изображения
-def cal_hash(path_file):
+def calculate_hash(path_file):
     img = Image.open(path_file)
     hash_img = str(imagehash.phash(img))
     img.close()
@@ -15,7 +14,7 @@ def cal_hash(path_file):
 
 
 # Получение списка всех изображений в папке
-def get_list_image(directory):
+def get_list_path_image(directory):
     list_path = []
     directory_list = list(os.walk(directory))
     for item in directory_list:
@@ -29,7 +28,7 @@ def get_list_image(directory):
 
 # Запись хэш-суммы изображения в таблицу
 def get_list_hash(image_df):
-    image_df['Image Hash'] = image_df['File Path'].apply(cal_hash)
+    image_df['Image Hash'] = image_df['File Path'].apply(calculate_hash)
     return image_df
 
 
@@ -54,34 +53,29 @@ def write_in_exel(df, file_name):
     file_path = os.path.join(current_dir, file_name)
     df.to_excel(file_path, sheet_name='dubl_img')
 
+def is_save_data():
+    while True:
+        answer_save_to_file = input("Сохранить данные в файл? y-yes, n-no\t")
+        if answer_save_to_file not in ['y', 'n']:
+            print('Ошибка ввода. Повторите ввод')
+        else:
+            return answer_save_to_file
 
-input_directory_path = input()
-request_directory = []
-while 1:
-    if input_directory_path == 'q':
-        break
-    else:
-        request_directory.append(input_directory_path)
-        input_directory_path = input()
-image_list = pd.concat([get_list_image(directory_path) for directory_path in request_directory], ignore_index=True)
-while True:
-    save_data = input("Сохранить данные в файл? y-yes, n-no\t")
-    print(save_data)
-    if not save_data in ['y', 'n']:
-        print('Ошибка ввода. Повторите ввод')
-    else:
-        break
-image_hash_list = get_list_hash(image_list)
-group_hash_result = group_hash(image_hash_list)
-count_images = len(group_hash_result)
-if count_images > 0:
-    num_cols = min(count_images, 2)
-    num_rows = (len(group_hash_result) + num_cols - 1) // num_cols
+def input_directory():
+    request_directory = []
+    input_directory_path = input()
+    while 1:
+        if input_directory_path == 'q':
+            return request_directory
+        else:
+            request_directory.append(input_directory_path)
+            input_directory_path = input()
+
+def draw_duplicate_image(group_hash, num_cols, num_rows):
     fig = plt.figure(figsize=(10, 6))
     axes = []
-    for i, (_, item) in enumerate(group_hash_result.iterrows()):
+    for i, (_, item) in enumerate(group_hash.iterrows()):
         file_path = item['File Path']
-        file_hash = item['Image Hash']
         img = Image.open(file_path)
         ax = fig.add_subplot(num_rows, num_cols, i + 1)
         ax.imshow(img)
@@ -92,7 +86,22 @@ if count_images > 0:
 
     plt.tight_layout()
     plt.show()
-    if save_data == 'y':
-        write_in_exel(group_hash_result, 'file_tmp.xlsx')
-else:
-    print("Not found duplicate")
+
+def main():
+    request_directory = input_directory()
+    flag_save_data = is_save_data()
+    image_list = pd.concat([get_list_path_image(directory_path) for directory_path in request_directory], ignore_index=True)
+    image_hash_list = get_list_hash(image_list)
+    group_hash_result = group_hash(image_hash_list)
+    count_images = len(group_hash_result)
+    if count_images > 0:
+        num_cols = min(count_images, 2)
+        num_rows = (len(group_hash_result) + num_cols - 1) // num_cols
+        draw_duplicate_image(group_hash_result, num_cols, num_rows)
+        if flag_save_data == 'y':
+            write_in_exel(group_hash_result, 'file_tmp.xlsx')
+    else:
+        print("Not found duplicate")
+
+if __name__ == '__main__':
+    main()
