@@ -62,6 +62,9 @@ def is_save_data():
             return answer_save_to_file
 
 def input_directory():
+    print("Введите путь к папке. Если необходимо ввести более одного пути, то ввод осуществляется через Enter.")
+    print("Для зачершения ввода выбранных папок введите 'q'")
+    print()
     request_directory = []
     input_directory_path = input()
     while 1:
