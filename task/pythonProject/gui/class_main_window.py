@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QDialog
-
 from gui.choose_delete_dir_window import Ui_Choose_var_delete
 from gui.error_window import Ui_Error
 from gui.main_window import Ui_MainWindow
@@ -7,9 +6,6 @@ from gui.message_window import Ui_Message
 from core.functional import search_dupl, show_dupls, save_to_xlsx
 
 
-# добавить проверку на повторный выбор подпапки
-# добавить вывод подпапок
-# добавить сообщение о не выбранности папки при попытке удалить
 # добавить сообщение об удалении папки с именем
 # добавить сообщение с удалением всех папок
 # добавить стирание удаленных папок из окна с выводом списка
@@ -17,10 +13,12 @@ from core.functional import search_dupl, show_dupls, save_to_xlsx
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.selected_folders = []
-        self.path_save_xlsx = ''
         self.setupUi(self)
         self.show()
+
+        self.selected_folders = []
+        self.path_save_xlsx = ''
+
         self.add_dir_button.clicked.connect(self.browse_folder)
         self.checkBox.clicked.connect(self.is_save_data_to_file)
         self.delete_dir_button.clicked.connect(self.show_choose_delete_dir_window)
@@ -53,6 +51,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     # выбор пути для сохранения файла с путями дубликатов
     def choose_path_save_xlsx(self):
         directory = QFileDialog.getExistingDirectory(self, "Выберите папку для сохранения файла")
+
         if directory:
             self.path_save_xlsx = directory
         else:
@@ -64,9 +63,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.path_save_xlsx = ''
 
     def choose_path_from_list(self):
-        if self.list_dir_widget.count():
-            if self.list_dir_widget.currentItem():
-                return self.list_dir_widget.currentItem().text()
+        if self.list_dir_widget.count() and self.list_dir_widget.currentItem():
+            return self.list_dir_widget.currentItem()
+        else:
+            return None
 
     def delete_all_dir(self):
         self.selected_folders.clear()
@@ -99,10 +99,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             choose_delete_dir_ui = Ui_Choose_var_delete()
             choose_delete_dir_ui.setupUi(window_dialog)
 
-            choose_path = self.choose_path_from_list()
-            if choose_path is None:
+            current_item_Qlist = self.choose_path_from_list()
+            if current_item_Qlist is None:
                 choose_delete_dir_ui.path.setText("Папка для удаления не выбрана.")
+                choose_path = None
             else:
+                choose_path = current_item_Qlist.text()
                 choose_delete_dir_ui.path.setText(choose_path)
 
             def delete_this_dir_and_close_window():
@@ -110,6 +112,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
                     self.show_error_window("Папка для удаления не выбрана.")
                 else:
                     self.delete_this_dir(choose_path)
+                    self.list_dir_widget.takeItem(self.list_dir_widget.row(current_item_Qlist))
+
                     window_dialog.close()
 
             def delete_all_dir_and_close_window():
@@ -128,10 +132,12 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def clicked_search_dupl(self):
         if len(self.selected_folders) != 0:
             flag_result, pd_result_search = search_dupl(self.selected_folders)
+
             if flag_result:
                 show_dupls(pd_result_search)
                 save_to_xlsx(pd_result_search, self.path_save_xlsx)
             else:
                 self.show_information_window("Дубликаты не найдены.")
+
         else:
             self.show_error_window("Нет папок в списке.")
