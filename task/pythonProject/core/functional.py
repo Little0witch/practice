@@ -54,13 +54,6 @@ def group_hash(table_hashsum):
         return pd.DataFrame()
 
 
-# Save the DataFrame duplicates to an .xlsx file in the current directory
-def write_in_exel(df, file_name):
-    current_dir = os.getcwd()
-    file_path = os.path.join(current_dir, file_name)
-    df.to_excel(file_path, sheet_name='dubl_img')
-
-
 def draw_duplicate_image(group_hash, num_cols, num_rows):
     fig = plt.figure(figsize=(10, 6))
     axes = []
@@ -95,7 +88,9 @@ def show_dupls(pd_group_dupl):
     num_rows = (count_dupl + num_cols - 1) // num_cols
     draw_duplicate_image(pd_group_dupl, num_cols, num_rows)
 
+
+# Save the DataFrame duplicates to an .xlsx file in the current directory
 def save_to_xlsx(pd_dupls, path_save_xlsx):
     if path_save_xlsx != '':
         file_path = os.path.join(path_save_xlsx, 'result.xlsx')
-        write_in_exel(pd_dupls, file_path)
+        pd_dupls.to_excel(file_path, sheet_name='duplicates')
