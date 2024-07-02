@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Practice 2024</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(170, 0, 127);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">color: rgb(170, 0, 127);</string>
+   </property>
+   <widget class="QPushButton" name="add_dir_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover {
+	background-color: rgb(252, 211, 255);
+}
+
+QPushButton {
+    background-color: rgb(244, 244, 244);
+}
+
+QPushButton:pressed {
+    background-color: rgb(244, 244, 244);
+}</string>
+    </property>
+    <property name="text">
+     <string>Добавить папку</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="list_dir_widget">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>30</y>
+      <width>571</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(244, 244, 244);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_over_list_dir">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>141</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Выбранные папки</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::TextFormat::AutoText</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delete_dir_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover {
+	background-color: rgb(252, 211, 255);
+}
+
+QPushButton {
+    background-color: rgb(244, 244, 244);
+}
+
+QPushButton:pressed {
+    background-color: rgb(244, 244, 244);
+}</string>
+    </property>
+    <property name="text">
+     <string>Удалить папку</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="search_dup_button">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>240</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover {
+	background-color: rgb(252, 211, 255);
+}
+
+QPushButton {
+    background-color: rgb(244, 244, 244);
+}
+
+QPushButton:pressed {
+    background-color: rgb(244, 244, 244);
+}</string>
+    </property>
+    <property name="text">
+     <string>Поиск дубликатов</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>240</y>
+      <width>321</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox{
+background-color: rgb(170, 0, 127);
+color: rgb(255, 255, 255);
+}
+QCheckBox:checked {
+	selection-color: rgb(0, 0, 0);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Сохранить список дубликатов в &quot;result.xlsx&quot;</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

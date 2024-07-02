@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>635</width>
+    <height>442</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(170, 0, 127);
+color: rgb(170, 0, 127);</string>
+  </property>
+  <widget class="QLabel" name="promt_text">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>571</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <kerning>false</kerning>
+     <hintingpreference>PreferVerticalHinting</hintingpreference>
+     <fontweight>Medium</fontweight>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(53, 53, 53);
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Приветствую, Пользователь!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Это приложение по поиску дубликатов в указанных папках. Если в папке есть подпапки, то изображения в них не будут обработаны. Добавлять папки с помощью кнопки &amp;quot;Добавить папку&amp;quot;. Для удаления определенной папки нужно выбрать ее в списке выбраных папок и кликнуть по кнопке &amp;quot;Удалить папку&amp;quot;, а в спомогательном окне нажатьь кнопку &amp;quot;Удалить выбранную папку&amp;quot;. Если требуется удалить все папки, то просто нажми &amp;quot;Удалить все папки&amp;quot;. Для удобства, пути к дубликатам можно сохранить в файл result.xlsx.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Приятного использования! &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::TextFormat::AutoText</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="start_button">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>370</y>
+     <width>161</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+	background-color: rgb(252, 211, 255);
+}
+
+QPushButton {
+    background-color: rgb(244, 244, 244);
+}
+
+QPushButton:pressed {
+    background-color: rgb(244, 244, 244);
+}</string>
+   </property>
+   <property name="text">
+    <string>Начать</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
