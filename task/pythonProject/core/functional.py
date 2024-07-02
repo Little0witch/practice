@@ -14,7 +14,7 @@ def calculate_hash(path_file):
     return hash_img
 
 
-# Получение списка всех изображений в папке
+# Получение списка всех изображений
 def get_list_path_image(directories):
     list_path = []
     error_files = []
@@ -78,17 +78,24 @@ def draw_duplicate_image(group_hash, num_cols, num_rows):
     plt.show()
 
 
-def search_dupl(list_dir, path_save_xlsx):
+def search_dupl(list_dir):
     image_list, error_files = get_list_path_image(list_dir)
     image_hash_list = get_list_hash(image_list)
     group_hash_result = group_hash(image_hash_list)
     count_images = len(group_hash_result)
-    if count_images > 0:
-        num_cols = min(count_images, 2)
-        num_rows = (len(group_hash_result) + num_cols - 1) // num_cols
-        draw_duplicate_image(group_hash_result, num_cols, num_rows)
-        if path_save_xlsx != '':
-            file_path = os.path.join(path_save_xlsx, 'result.xlsx')
-            write_in_exel(group_hash_result, file_path)
+    if count_images == 0:
+        return False, group_hash_result
     else:
-        print("Not found duplicate")
+        return True, group_hash_result
+
+
+def show_dupls(pd_group_dupl):
+    count_dupl = len(pd_group_dupl)
+    num_cols = min(count_dupl, 2)
+    num_rows = (count_dupl + num_cols - 1) // num_cols
+    draw_duplicate_image(pd_group_dupl, num_cols, num_rows)
+
+def save_to_xlsx(pd_dupls, path_save_xlsx):
+    if path_save_xlsx != '':
+        file_path = os.path.join(path_save_xlsx, 'result.xlsx')
+        write_in_exel(pd_dupls, file_path)

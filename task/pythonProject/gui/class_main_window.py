@@ -4,7 +4,7 @@ from gui.choose_delete_dir_window import Ui_Choose_var_delete
 from gui.error_window import Ui_Error
 from gui.main_window import Ui_MainWindow
 from gui.message_window import Ui_Message
-from core.functional import search_dupl
+from core.functional import search_dupl, show_dupls, save_to_xlsx
 
 
 # добавить проверку на повторный выбор подпапки
@@ -116,5 +116,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 
     def clicked_search_dupl(self):
-        # вызвать окно с пояснение о том, что программа выполняется
-        search_dupl(self.selected_folders, self.path_save_xlsx)
+        flag_result, pd_result_search = search_dupl(self.selected_folders)
+        if flag_result:
+            show_dupls(pd_result_search)
+            save_to_xlsx(pd_result_search,self.path_save_xlsx)
+        else:
+            self.show_information_window("Дубликаты не найдены")
