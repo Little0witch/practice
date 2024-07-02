@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
+    <width>400</width>
     <height>150</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>200</width>
+    <width>400</width>
     <height>150</height>
    </size>
   </property>
@@ -26,11 +26,16 @@ color: rgb(170, 0, 127);</string>
   <widget class="QPushButton" name="ok_button">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>100</y>
-     <width>75</width>
-     <height>26</height>
+     <x>160</x>
+     <y>110</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton:hover {
@@ -54,7 +59,7 @@ QPushButton:pressed {
     <rect>
      <x>10</x>
      <y>30</y>
-     <width>181</width>
+     <width>371</width>
      <height>51</height>
     </rect>
    </property>
@@ -69,6 +74,9 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
  </widget>

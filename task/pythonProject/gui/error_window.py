@@ -22,14 +22,17 @@ from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QPushButton,
 class Ui_Error(object):
     def setupUi(self, Message):
         if not Message.objectName():
-            Message.setObjectName(u"Error")
-        Message.resize(200, 150)
-        Message.setMaximumSize(QSize(200, 150))
+            Message.setObjectName(u"Message")
+        Message.resize(400, 150)
+        Message.setMaximumSize(QSize(400, 150))
         Message.setStyleSheet(u"background-color: rgb(170, 0, 127);\n"
                               "color: rgb(170, 0, 127);")
         self.ok_button = QPushButton(Message)
         self.ok_button.setObjectName(u"ok_button")
-        self.ok_button.setGeometry(QRect(60, 100, 75, 26))
+        self.ok_button.setGeometry(QRect(160, 110, 91, 31))
+        font = QFont()
+        font.setPointSize(12)
+        self.ok_button.setFont(font)
         self.ok_button.setStyleSheet(u"QPushButton:hover {\n"
                                      "	background-color: rgb(252, 211, 255);\n"
                                      "}\n"
@@ -43,13 +46,11 @@ class Ui_Error(object):
                                      "}")
         self.information_label = QLabel(Message)
         self.information_label.setObjectName(u"information_label")
-        self.information_label.setGeometry(QRect(10, 30, 181, 51))
-        font = QFont()
-        font.setPointSize(12)
+        self.information_label.setGeometry(QRect(10, 30, 371, 51))
         self.information_label.setFont(font)
         self.information_label.setStyleSheet(u"border-color: rgb(53, 53, 53);\n"
                                              "color: rgb(255, 255, 255);")
-        self.information_label.setAlignment(Qt.AlignCenter)
+        self.information_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.retranslateUi(Message)
 

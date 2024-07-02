@@ -23,7 +23,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.show()
         self.add_dir_button.clicked.connect(self.browse_folder)
         self.checkBox.clicked.connect(self.is_save_data_to_file)
-        self.delete_dir_button.clicked.connect(self.show_choose_delete_die_window)
+        self.delete_dir_button.clicked.connect(self.show_choose_delete_dir_window)
         self.search_dup_button.clicked.connect(self.clicked_search_dupl)
 
     # выбор папок для поиска изображений
@@ -93,32 +93,45 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         information_ui.ok_button.clicked.connect(message_dialog.accept)
         message_dialog.exec()
 
-    def show_choose_delete_die_window(self):
-        window_dialog = QDialog()
-        choose_delete_dir_ui = Ui_Choose_var_delete()
-        choose_delete_dir_ui.setupUi(window_dialog)
+    def show_choose_delete_dir_window(self):
+        if len(self.selected_folders) != 0:
+            window_dialog = QDialog()
+            choose_delete_dir_ui = Ui_Choose_var_delete()
+            choose_delete_dir_ui.setupUi(window_dialog)
 
-        choose_path = self.choose_path_from_list()
-        choose_delete_dir_ui.path.setText(choose_path)
+            choose_path = self.choose_path_from_list()
+            if choose_path is None:
+                choose_delete_dir_ui.path.setText("Папка для удаления не выбрана.")
+            else:
+                choose_delete_dir_ui.path.setText(choose_path)
 
-        def delete_this_dir_and_close_window():
-            self.delete_this_dir(choose_path)
-            window_dialog.close()
+            def delete_this_dir_and_close_window():
+                if choose_path is None:
+                    self.show_error_window("Папка для удаления не выбрана.")
+                else:
+                    self.delete_this_dir(choose_path)
+                    window_dialog.close()
 
-        def delete_all_dir_and_close_window():
-            self.delete_all_dir()
-            window_dialog.close()
+            def delete_all_dir_and_close_window():
+                self.delete_all_dir()
+                self.list_dir_widget.clear()
+                window_dialog.close()
 
-        choose_delete_dir_ui.all_dir_del_button.clicked.connect(delete_all_dir_and_close_window)
-        choose_delete_dir_ui.del_this_dir_button.clicked.connect(delete_this_dir_and_close_window)
+            choose_delete_dir_ui.all_dir_del_button.clicked.connect(delete_all_dir_and_close_window)
+            choose_delete_dir_ui.del_this_dir_button.clicked.connect(delete_this_dir_and_close_window)
 
-        window_dialog.exec()
+            window_dialog.exec()
+        else:
+            self.show_error_window("Нет папок в списке.")
 
 
     def clicked_search_dupl(self):
-        flag_result, pd_result_search = search_dupl(self.selected_folders)
-        if flag_result:
-            show_dupls(pd_result_search)
-            save_to_xlsx(pd_result_search,self.path_save_xlsx)
+        if len(self.selected_folders) != 0:
+            flag_result, pd_result_search = search_dupl(self.selected_folders)
+            if flag_result:
+                show_dupls(pd_result_search)
+                save_to_xlsx(pd_result_search, self.path_save_xlsx)
+            else:
+                self.show_information_window("Дубликаты не найдены.")
         else:
-            self.show_information_window("Дубликаты не найдены")
+            self.show_error_window("Нет папок в списке.")
