@@ -54,23 +54,6 @@ def group_hash(table_hashsum):
         return pd.DataFrame()
 
 
-def draw_duplicate_image(group_hash, num_cols, num_rows):
-    fig = plt.figure(figsize=(10, 6))
-    axes = []
-    for i, (_, item) in enumerate(group_hash.iterrows()):
-        file_path = item['File Path']
-        img = Image.open(file_path)
-        ax = fig.add_subplot(num_rows, num_cols, i + 1)
-        ax.imshow(img)
-        ax.set_title(f'Image {i + 1}')
-        ax.axis('off')
-        axes.append(ax)
-        img.close()
-
-    plt.tight_layout()
-    plt.show()
-
-
 def search_dupl(list_dir):
     image_list, error_files = get_list_path_image(list_dir)
     image_hash_list = get_list_hash(image_list)
@@ -86,7 +69,20 @@ def show_dupls(pd_group_dupl):
     count_dupl = len(pd_group_dupl)
     num_cols = min(count_dupl, 2)
     num_rows = (count_dupl + num_cols - 1) // num_cols
-    draw_duplicate_image(pd_group_dupl, num_cols, num_rows)
+    fig = plt.figure(figsize=(10, 6))
+    axes = []
+    for i, (_, item) in enumerate(pd_group_dupl.iterrows()):
+        file_path = item['File Path']
+        img = Image.open(file_path)
+        ax = fig.add_subplot(num_rows, num_cols, i + 1)
+        ax.imshow(img)
+        ax.set_title(f'Image {i + 1}')
+        ax.axis('off')
+        axes.append(ax)
+        img.close()
+
+    plt.tight_layout()
+    plt.show()
 
 
 # Save the DataFrame duplicates to an .xlsx file in the current directory
