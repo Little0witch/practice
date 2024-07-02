@@ -5,7 +5,7 @@ from gui.class_promt_window import promtWindow
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    promt_win = promtWindow()
-    if promt_win.exec() == QDialog.Accepted:
+    promt_window = promtWindow()
+    if promt_window.exec() == QDialog.Accepted:
         window = MyMainWindow()
         sys.exit(app.exec())
