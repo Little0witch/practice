@@ -69,14 +69,14 @@ def show_dupls(pd_group_dupl):
     count_dupl = len(pd_group_dupl)
     num_cols = min(count_dupl, 2)
     num_rows = (count_dupl + num_cols - 1) // num_cols
-    fig = plt.figure(figsize=(10, 6))
+    fig = plt.figure(figsize=(10, 6),constrained_layout=True)
     axes = []
     for i, (_, item) in enumerate(pd_group_dupl.iterrows()):
         file_path = item['File Path']
         img = Image.open(file_path)
         ax = fig.add_subplot(num_rows, num_cols, i + 1)
         ax.imshow(img)
-        ax.set_title(f'Image {i + 1}')
+        # ax.set_title(f'Image {i + 1}')
         ax.axis('off')
         axes.append(ax)
         img.close()
