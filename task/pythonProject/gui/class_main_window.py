@@ -4,11 +4,8 @@ from gui.error_window import Ui_Error
 from gui.main_window import Ui_MainWindow
 from gui.message_window import Ui_Message
 from core.functional import search_dupl, show_dupls, save_to_xlsx
+from gui.show_images import view_images
 
-
-# добавить сообщение об удалении папки с именем
-# добавить сообщение с удалением всех папок
-# добавить стирание удаленных папок из окна с выводом списка
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -23,6 +20,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.checkBox.clicked.connect(self.is_save_data_to_file)
         self.delete_dir_button.clicked.connect(self.show_choose_delete_dir_window)
         self.search_dup_button.clicked.connect(self.clicked_search_dupl)
+
 
     # выбор папок для поиска изображений
     def browse_folder(self):
@@ -134,10 +132,20 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
             flag_result, pd_result_search = search_dupl(self.selected_folders)
 
             if flag_result:
-                show_dupls(pd_result_search)
+                self.show_image_display_window(pd_result_search)
+                # show_dupls(pd_result_search)
                 save_to_xlsx(pd_result_search, self.path_save_xlsx)
             else:
                 self.show_information_window("Дубликаты не найдены.")
 
         else:
             self.show_error_window("Нет папок в списке.")
+
+    def show_image_display_window(self, df_duplitation):
+        image_paths = df_duplitation['File Path'].tolist()  # Получение списка путей к изображениям
+        dialog = QDialog()
+        image_display = view_images()
+        image_display.setupUi(dialog)
+        image_display.display_images(image_paths)
+        image_display.pushButton.clicked.connect(dialog.accept)
+        dialog.exec()

@@ -76,7 +76,6 @@ def show_dupls(pd_group_dupl):
         img = Image.open(file_path)
         ax = fig.add_subplot(num_rows, num_cols, i + 1)
         ax.imshow(img)
-        # ax.set_title(f'Image {i + 1}')
         ax.axis('off')
         axes.append(ax)
         img.close()
